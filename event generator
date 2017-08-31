@@ -1,0 +1,17 @@
+# adding holidays/events to a dataframe with targeted analyzing time range
+
+# specify time range for training
+nums <- seq.Date(as.Date('2015-01-01'), as.Date('2017-01-01'), by = 1)
+ 
+# create event list from a event table with known fromDate and toDate
+eventlist <- lapply(1:nrow(event), function(x) return(data.frame(date = seq.Date(as.Date(event$start_date[x]), as.Date(event$end_date[x]), by = 1), 1)))
+
+# create a dataframe of events
+myfun <- function(x)
+        ifelse(is.na(charmatch(nums, as.character(x))), 0, 1)
+
+mymat <- lapply(eventlist, myfun)
+mymat2 <- matrix(unlist(mymat), ncol = length(mymat), byrow = FALSE)
+colnames(mymat2) <- names(mymat)
+rownames(mymat2) <- as.character(nums)
+mymat2 <-  as.data.frame(mymat2)
