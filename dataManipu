@@ -1,0 +1,21 @@
+
+
+blanktoNA <- function(x) {i <- sapply(x, is.character); x[i] <- lapply(x[i], function(x) {ifelse(x=='', NA, x)}); x}
+factorToCharacter <- function(x) { i <- sapply(x, is.factor); x[i] <- lapply(x[i], as.character); x }
+characterToFactor <- function(x) { i <- sapply(x, is.character); x[i] <- lapply(x[i], as.factor); x }
+characterToDate <- function(x) { i <- sapply(x, is.character); x[i] <- lapply(x[i], as.Date); x }
+
+naToZero <- function (v) 
+{
+  v[is.na(v)] <- 0
+  return(v)
+}
+
+
+week <- function(date){
+  weekday <- wday(date)
+  weekday <- ifelse(weekday == 1, 7, weekday-1)
+  week <- date-weekday+1
+  return(week)
+}
+
